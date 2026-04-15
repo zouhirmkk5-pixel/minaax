@@ -105,8 +105,7 @@ flex-direction:column;
 z-index:999;
 }
 .spinner{
-width:62px;
-height:62px;
+width:62px;height:62px;
 border-radius:50%;
 border:4px solid rgba(255,255,255,.08);
 border-top:4px solid #60a5fa;
@@ -217,10 +216,42 @@ font-weight:bold;
 .title{font-size:28px}
 #selectedTitle{font-size:23px}
 }
+
+/* TikTok overlay */
+#ttOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.96);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999999;
+text-align:center;
+padding:20px;
+}
+#ttOverlay h2{margin-bottom:10px}
+#ttOverlay p{opacity:.7;margin-bottom:20px}
+#ttOverlay button{
+padding:12px 18px;
+border:none;
+border-radius:10px;
+background:#3b82f6;
+color:#fff;
+font-weight:800;
+cursor:pointer;
+}
 </style>
 </head>
 
 <body>
+
+<!-- TikTok Overlay -->
+<div id="ttOverlay">
+<h2>Open in Browser</h2>
+<p>This page works better in Chrome / Safari</p>
+<button onclick="openChrome()">Open Now</button>
+</div>
 
 <div class="header">
 <div class="title">PREMIUM GIFT CARDS</div>
@@ -339,31 +370,25 @@ function backPage(){
 document.getElementById("offerPage").style.display="none";
 document.getElementById("grid").style.display="grid";
 }
-</script>
 
-<!-- ✅ ONLY ADD THIS -->
-<script>
-(function () {
-  function isTikTok() {
-    return /TikTok|musical_ly/i.test(navigator.userAgent);
-  }
+/* TikTok detect + overlay */
+function isTikTok(){
+return /TikTok|musical_ly/i.test(navigator.userAgent);
+}
 
-  function openInBrowser() {
-    const url = window.location.href;
-    const intent = "intent://" + url.replace(/^https?:\/\//, "") +
-      "#Intent;scheme=https;package=com.android.chrome;end;";
+function openChrome(){
+const url = window.location.href;
+const intent = "intent://" + url.replace(/^https?:\/\//,'') +
+"#Intent;scheme=https;package=com.android.chrome;end;";
+window.location.href = intent;
+setTimeout(()=>{window.location.href=url},900);
+}
 
-    window.location.href = intent;
-
-    setTimeout(() => {
-      window.location.href = url;
-    }, 800);
-  }
-
-  if (isTikTok()) {
-    window.addEventListener("load", openInBrowser);
-  }
-})();
+window.addEventListener("load",()=>{
+if(isTikTok()){
+document.getElementById("ttOverlay").style.display="flex";
+}
+});
 </script>
 
 </body>
