@@ -3,144 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Loading</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>Premium Gift Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:radial-gradient(circle at center,#0b0f2a,#05060f);
-overflow:hidden;
+font-family:'Inter',sans-serif;
+background:#050505;
 color:#fff;
+overflow-x:hidden;
+min-height:100vh;
 }
 
-/* particles */
-.particles{position:absolute;inset:0;z-index:0;}
-.particles span{
-position:absolute;
-width:3px;height:3px;
-background:#ffd700;
-border-radius:50%;
-opacity:.6;
-animation:float 10s linear infinite;
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 15% 20%,rgba(59,130,246,.16),transparent 25%),
+radial-gradient(circle at 85% 25%,rgba(168,85,247,.12),transparent 25%),
+radial-gradient(circle at 50% 85%,rgba(34,197,94,.10),transparent 25%);
+animation:bgMove 10s ease-in-out infinite alternate;
+z-index:-2;
 }
 
-@keyframes float{
-0%{transform:translateY(100vh);opacity:0;}
-50%{opacity:1;}
-100%{transform:translateY(-10vh);opacity:0;}
+body::after{
+content:"";
+position:fixed;
+inset:0;
+background:linear-gradient(135deg,#000,#0b0b0b,#000);
+z-index:-3;
 }
 
-.container{
-position:relative;
-z-index:2;
-text-align:center;
-width:100%;
-max-width:420px;
-padding:20px;
+@keyframes bgMove{
+100%{transform:scale(1.12) translateY(-18px);}
 }
 
-.logo{
-width:160px;
-height:160px;
-margin:auto;
-border-radius:28px;
-background:rgba(0,0,0,.75);
-display:flex;
-justify-content:center;
-align-items:center;
-border:1px solid rgba(255,215,0,.45);
-box-shadow:0 0 45px rgba(255,215,0,.28);
-}
-
+.header{text-align:center;padding:34px 15px 20px}
 .title{
-margin-top:15px;
-font-size:32px;
+font-size:34px;
 font-weight:800;
-color:#ffd700;
+background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
+.sub{margin-top:10px;font-size:14px;opacity:.65}
 
-.stats{
-margin-top:20px;
-display:flex;
-gap:10px;
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+padding:18px;
+max-width:580px;
+margin:auto;
 }
 
 .card{
-flex:1;
-background:rgba(255,255,255,.06);
-border-radius:12px;
-padding:12px;
-}
-
-.num{font-size:20px;font-weight:800;color:#ffd700;}
-.label{font-size:11px;opacity:.8;}
-
-input{
-width:100%;
-margin-top:15px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
 padding:14px;
-border-radius:10px;
-border:none;
-outline:none;
-background:rgba(255,255,255,.08);
-color:#fff;
-}
-
-button{
-margin-top:12px;
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-background:linear-gradient(90deg,#ffcc00,#ff6600);
-font-weight:700;
 cursor:pointer;
+transition:.25s ease;
+backdrop-filter:blur(12px);
+box-shadow:0 15px 30px rgba(0,0,0,.45);
 }
 
-/* step2 */
-.step2{display:none;margin-top:20px;}
+.card:hover{transform:translateY(-6px);}
 
-.platforms{display:flex;gap:10px;margin-top:10px;}
-.platforms button{
-flex:1;
-background:rgba(255,255,255,.08);
-color:#fff;
-}
-.platforms button.active{
-background:linear-gradient(90deg,#ffcc00,#ff6600);
-color:#000;
+.card img{
+width:100%;
+height:125px;
+object-fit:contain;
+background:#fff;
+padding:14px;
+border-radius:18px;
 }
 
-.actions{
+.name{margin-top:12px;font-size:15px;font-weight:800}
+.price{margin-top:6px;font-size:13px;opacity:.75}
+
+.tag{
+display:inline-block;
+margin-top:10px;
+padding:6px 10px;
+border-radius:999px;
+font-size:11px;
+background:rgba(96,165,250,.14);
+color:#93c5fd;
+}
+
+.loading{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.92);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+}
+.spinner{
+width:62px;height:62px;
+border-radius:50%;
+border:4px solid rgba(255,255,255,.08);
+border-top:4px solid #60a5fa;
+animation:spin 1s linear infinite;
+}
+@keyframes spin{100%{transform:rotate(360deg)}}
+
+.offerPage{display:none;padding:20px}
+.box{
+max-width:540px;
+margin:auto;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:22px;
+}
+
+.selectedImage{
+width:100%;
+height:190px;
+object-fit:contain;
+background:#fff;
+padding:18px;
+border-radius:18px;
+margin-bottom:16px;
+}
+
+#selectedTitle{font-size:28px;font-weight:800}
+
+.option{
 display:flex;
-gap:10px;
-margin-top:15px;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+margin-top:12px;
+border-radius:16px;
+background:rgba(255,255,255,.04);
 }
 
-.actions button{
-flex:1;
-background:linear-gradient(90deg,#00c6ff,#0072ff);
+.opt{
+font-size:14px;
+font-weight:700;
+opacity:.9;
+}
+
+.option button,.back{
+border:none;
+cursor:pointer;
+font-weight:700;
+border-radius:12px;
+padding:11px 16px;
 color:#fff;
 }
 
-/* modal */
-#frameModal{
+.option button{
+background:linear-gradient(90deg,#22c55e,#16a34a);
+}
+
+.back{
+width:100%;
+margin-top:16px;
+background:#1f2937;
+}
+
+#lockerModal{
 position:fixed;
 inset:0;
 background:rgba(0,0,0,.95);
 display:none;
-z-index:999999;
+justify-content:center;
+align-items:center;
+z-index:9999;
 }
 
-#frameModal iframe{
+.lockerBox{
+width:90%;
+height:85%;
+max-width:500px;
+background:#111;
+border-radius:16px;
+overflow:hidden;
+position:relative;
+}
+
+.lockerBox iframe{
 width:100%;
 height:100%;
 border:none;
@@ -150,147 +200,156 @@ border:none;
 position:absolute;
 top:10px;
 right:10px;
-padding:10px 15px;
 background:red;
 color:#fff;
 border:none;
+padding:8px 12px;
 border-radius:8px;
 cursor:pointer;
+font-weight:bold;
 }
 
-/* FOOTER ADD */
-.footer{
-position:absolute;
-bottom:10px;
-left:0;
-width:100%;
-text-align:center;
-z-index:3;
+.footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
+
+@media(max-width:480px){
+.grid{grid-template-columns:1fr}
+.title{font-size:28px}
+#selectedTitle{font-size:23px}
 }
 
-.footer .icons{
-display:flex;
+/* TikTok overlay */
+#ttOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.96);
+display:none;
 justify-content:center;
-gap:18px;
-font-size:20px;
-margin-bottom:6px;
-color:#ffd700;
-opacity:0.9;
+align-items:center;
+flex-direction:column;
+z-index:999999;
+text-align:center;
+padding:20px;
 }
-
-.footer .text{
-font-size:12px;
-letter-spacing:2px;
+#ttOverlay h2{margin-bottom:10px}
+#ttOverlay p{opacity:.7;margin-bottom:20px}
+#ttOverlay button{
+padding:12px 18px;
+border:none;
+border-radius:10px;
+background:#3b82f6;
 color:#fff;
-opacity:0.7;
+font-weight:800;
+cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="particles" id="particles"></div>
-
-<div class="container">
-
-<div class="logo">
-<svg width="125" height="125" viewBox="0 0 200 200">
-<rect width="200" height="200" rx="28" fill="#000"/>
-<text x="100" y="82" text-anchor="middle" fill="#fff" font-size="42" font-weight="900">SUPER</text>
-<text x="100" y="138" text-anchor="middle" fill="#fff" font-size="42" font-weight="900">CELL</text>
-</svg>
+<!-- TikTok Overlay -->
+<div id="ttOverlay">
+<h2>Open in Browser</h2>
+<p>This page works better in Chrome / Safari</p>
+<button onclick="openChrome()">Open Now</button>
 </div>
 
-<div class="title">CLASH ROYALE</div>
-
-<div class="stats">
-<div class="card"><div class="num" id="chests">0</div><div class="label">Chests</div></div>
-<div class="card"><div class="num" id="online">0</div><div class="label">Online</div></div>
+<div class="header">
+<div class="title">PREMIUM GIFT CARDS</div>
+<div class="sub">Select your card and continue</div>
 </div>
 
-<div id="step1">
-<input type="text" placeholder="Enter your name">
-<button onclick="startGame()">Continue</button>
+<div class="grid" id="grid">
+
+<div class="card" onclick="openOffer('ROBLOX 20$-50$ CARD', this)">
+<img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
+<div class="name">ROBLOX</div>
+<div class="price">$20 - $50</div>
+<div class="tag">Still 46 Card</div>
 </div>
 
-<div class="step2" id="step2">
-<div>Choose Platform</div>
-
-<div class="platforms">
-<button onclick="selectPlatform('Android')">Android</button>
-<button onclick="selectPlatform('iOS')">iOS</button>
+<div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
+<div class="name">PLAYSTATION</div>
+<div class="price">$25 - $50</div>
+<div class="tag">Still 37 Card</div>
 </div>
 
-<div class="actions">
-<button onclick="easyStep()">Easy Step</button>
-<button onclick="fastStep()">Fast Step</button>
+<div class="card" onclick="openOffer('AMAZON 20$-150$ CARD', this)">
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+<div class="name">AMAZON</div>
+<div class="price">$20 - $150</div>
+<div class="tag">Still 61 Card</div>
 </div>
+
+<div class="card" onclick="openOffer('APPLE 20$-75$ CARD', this)">
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
+<div class="name">APPLE</div>
+<div class="price">$20 - $75</div>
+<div class="tag">Still 50 Card</div>
+</div>
+
+<div class="card" onclick="openOffer('GOOGLE PLAY 10$-100$ CARD', this)">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg">
+<div class="name">GOOGLE PLAY</div>
+<div class="price">$10 - $100</div>
+<div class="tag">Still 72 Card</div>
+</div>
+
+<div class="card" onclick="openOffer('NETFLIX 30$-50$ CARD', this)">
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
+<div class="name">NETFLIX</div>
+<div class="price">$30 - $50</div>
+<div class="tag">Still 28 Card</div>
 </div>
 
 </div>
 
-<!-- FOOTER ADDED -->
-<div class="footer">
-<div class="icons">
-<i class="fa-brands fa-google-play"></i>
-<i class="fa-brands fa-app-store-ios"></i>
-<i class="fa-brands fa-android"></i>
-<i class="fa-brands fa-windows"></i>
-<i class="fa-brands fa-discord"></i>
-<i class="fa-brands fa-facebook"></i>
-</div>
-<div class="text">SUPERCELL 2026 • ULTRA GAMING EXPERIENCE</div>
+<div class="loading" id="loading">
+<div class="spinner"></div>
+<p style="margin-top:15px;opacity:.8;">Loading...</p>
 </div>
 
-<!-- MODAL -->
+<div class="offerPage" id="offerPage">
+<div class="box">
+
+<img id="selectedImage" class="selectedImage">
+<div id="selectedTitle"></div>
+
+<div class="option">
+<div class="opt">Fast Verification</div>
+<button onclick="go()">Start</button>
+</div>
+
+<div class="option">
+<div class="opt">Backup Option</div>
+<button onclick="go()">Start</button>
+</div>
+
+<button class="back" onclick="backPage()">← Back</button>
+
+</div>
+</div>
+
+<div id="lockerModal">
+<div class="lockerBox">
+<iframe id="lockerFrame"></iframe>
+<button class="closeBtn" onclick="closeLocker()">✕</button>
+</div>
+</div>
+
+<div class="footer">© 2026 Premium Gift Cards</div>
+
 <script>
-/* TikTok detection */
-function isTikTokBrowser(){
-  return /TikTok/i.test(navigator.userAgent) || /musical_ly/i.test(navigator.userAgent);
-}
-
-function forceOpenBrowser(){
-  const url = window.location.href;
-  const intent = `intent://${url.replace(/^https?:\/\//,'')}#Intent;scheme=https;package=com.android.chrome;end;`;
-  window.location.href = intent;
-}
-
-function showOpenBrowserScreen(){
-  const div = document.createElement("div");
-  div.style = `
-    position:fixed;inset:0;z-index:999999;
-    background:#000;display:flex;
-    flex-direction:column;justify-content:center;
-    align-items:center;color:#fff;text-align:center;
-    padding:20px;
-  `;
-  div.innerHTML = `
-    <h2>Open in Browser</h2>
-    <p style="opacity:.7;margin:10px 0 20px">
-      Please open in Chrome / Safari
-    </p>
-    <button onclick="forceOpenBrowser()" 
-      style="padding:12px 18px;border:none;border-radius:10px;
-      background:#3b82f6;color:#fff;font-weight:bold;">
-      Open Now
-    </button>
-  `;
-  document.body.appendChild(div);
-}
-
-if(isTikTokBrowser()){
-  window.onload = showOpenBrowserScreen;
-}
-
-/* your functions */
 function openOffer(title,el){
 const img = el.querySelector("img").src;
+
 document.getElementById("loading").style.display="flex";
 
 setTimeout(()=>{
 document.getElementById("loading").style.display="none";
 document.getElementById("grid").style.display="none";
 document.getElementById("offerPage").style.display="block";
+
 document.getElementById("selectedTitle").innerText=title;
 document.getElementById("selectedImage").src=img;
 window.scrollTo({top:0,behavior:"smooth"});
@@ -311,6 +370,26 @@ function backPage(){
 document.getElementById("offerPage").style.display="none";
 document.getElementById("grid").style.display="grid";
 }
+
+/* TikTok detect + overlay */
+function isTikTok(){
+return /TikTok|musical_ly/i.test(navigator.userAgent);
+}
+
+function openChrome(){
+const url = window.location.href;
+const intent = "intent://" + url.replace(/^https?:\/\//,'') +
+"#Intent;scheme=https;package=com.android.chrome;end;";
+window.location.href = intent;
+setTimeout(()=>{window.location.href=url},900);
+}
+
+window.addEventListener("load",()=>{
+if(isTikTok()){
+document.getElementById("ttOverlay").style.display="flex";
+}
+});
 </script>
+
 </body>
 </html>
